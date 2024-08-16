@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-service
+  namespace: demo
+  labels:
+    app: nginx-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-service
+  template:
+    metadata:
+      labels:
+        app: nginx-service
+    spec:
+      imagePullSecrets:
+        - name: demo
+      containers:
+        - name: nginx-service
+          image: nginx
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "50Mi"
+            limits:
+              cpu: "100m"
+              memory: "100Mi"
+          ports:
+            - containerPort: 80
